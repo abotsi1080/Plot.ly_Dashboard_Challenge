@@ -1,30 +1,30 @@
 // Initializing the page and calling the needed functions
 function initialize() {
 
-    // Grabbing the dropdown element
-    var selector = d3.select('#selDataset');
+    // Using d3 to select the data set
+    var data_set = d3.select('#selDataset');
 
     d3.json("samples.json").then(function(samplesData) {
         var names = samplesData.names;
 
-        selector.selectAll('option')
+        data_set.selectAll('option')
             .data(names)
             .enter()
             .append('option')
             .attr('value', d => d)
             .text(d => d);
 
-        // Take in the first name upon loading the page
+        // Upload the first name when the page is laoded
         var starter = names[0];
 
-        // Call other functions using starter name
+        // Using the starter name, let's create the functions for the plots and for the demographics
         buildPlots(starter);
         demographics(starter);
 
     }).catch(error => console.log(error));
 };
 
-// Setting a function to change the plots and demographics with a new selection from the dropdown menu
+// Creating a function that can be used to change the plots and demographics from the dropdown menu
 function optionChanged(newID) {
     buildPlots(newID);
     demographics(newID);
